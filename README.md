@@ -25,7 +25,6 @@
 
 ### **Frontend**
 - [React](https://reactjs.org/) para desenvolvimento da interface do usuário.
-- [Chakra-UI](https://v2.chakra-ui.com/) para componentes visuais.
 
 ### **Backend**
 - [Node.js](https://nodejs.org/) com [Express.js](https://expressjs.com/) para gerenciamento de requisições.
@@ -48,7 +47,7 @@
    ```
 2. Acesse o diretório do projeto:
    ```bash
-   cd dentalstock
+   cd OdontoControl
    ```
 3. Instale as dependências:
    ```bash
