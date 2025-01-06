@@ -45,7 +45,8 @@ const createTablesQuerys = async () => {
         quantidade INT NOT NULL,
         preco DECIMAL(10, 2) NOT NULL,
         marca VARCHAR(50),
-        categoria VARCHAR(50)
+        categoria VARCHAR(50),
+        foto BLOB
     );
 `;
 
