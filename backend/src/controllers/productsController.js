@@ -22,6 +22,7 @@ export const addProduct = async (req, res) => {
 export const getProducts = async (req, res) => {
 
     const q = "SELECT * FROM produtos;"
+    let conn;
 
     try {
         const conn = await pool.getConnection();
