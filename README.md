@@ -10,7 +10,7 @@
 - **Excluir produtos:** Remova itens que não são mais necessários.
 - **Visualizar produtos:** Consulte todos os itens registrados com filtros por nome, categoria e quantidade disponível.
 
-### 2. **Sistema de Login**
+### 2. **Sistema de Login** (Não implementado)
 - **Cadastro de usuários:** Permite criar contas para controlar o acesso ao sistema.
 - **Autenticação segura:** Utilize credenciais únicas com senhas protegidas por hash.
 - **Gestão de sessões:** Controle de login/logout para evitar acessos não autorizados.
@@ -19,8 +19,6 @@
 - Interface moderna e fácil de usar, projetada para dentistas e suas equipes.
 - Navegação simples entre as funcionalidades principais.
 
-### 4. **Agendamento de pacientes**
-- Interface para agendar pacientes, integrando duas soluções em um único sistema.
 ## **Tecnologias Utilizadas**
 
 ### **Frontend**
@@ -43,7 +41,7 @@
 ### **Passos**
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/dentalstock.git
+   git clone https://github.com/seu-usuario/OdontoControl.git
    ```
 2. Acesse o diretório do projeto:
    ```bash
