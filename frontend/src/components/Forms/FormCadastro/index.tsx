@@ -36,7 +36,7 @@ export function CadastroProduto() {
     formData.append("preco", preco.current.value);
     formData.append("marca", marca.current.value);
     formData.append("categoria", categoria.current.value);
-    formData.append("foto", foto.current.files[0]); // Enviando a imagem corretamente
+    formData.append("foto", foto.current.files[0]); 
 
     try {
       await axios.post("http://localhost:5000/addProduct", formData, {

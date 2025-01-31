@@ -94,3 +94,33 @@ export const deleteProduct = async (req, res) => {
         if (conn) conn.release();
     }
 };
+
+export const updateProduct = async (req, res) => {
+    const { id } = req.params;
+    const { nome, descricao, quantidade, preco, marca, categoria, foto } = req.body;
+    
+    const q = `
+        UPDATE produtos 
+        SET nome = ?, descricao = ?, quantidade = ?, preco = ?, marca = ?, categoria = ?, foto = ?
+        WHERE id = ?;
+    `;
+
+    let conn;
+
+    try {
+        conn = await pool.getConnection();
+        const [result] = await conn.query(q, [nome, descricao, quantidade, preco, marca, categoria, foto, id]);
+        conn.release(); 
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ mensagem: "Produto não encontrado." });
+        }
+
+        res.status(200).json({ mensagem: "Produto atualizado com sucesso!" });
+    } catch (err) {
+        console.error("Erro no banco de dados:", err);
+        res.status(500).json({ mensagem: "Erro no servidor!" });
+    } finally {
+        if (conn) conn.release();
+    }
+};
