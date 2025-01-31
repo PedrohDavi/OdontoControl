@@ -22,24 +22,26 @@ export function CadastroProduto() {
       !preco.current ||
       !marca.current ||
       !categoria.current ||
-      !foto.current
+      !foto.current ||
+      !foto.current.files?.length
     ) {
       setToast({ type: "error", message: "Erro: Alguns campos estão inválidos!" });
       return;
     }
 
-    const dadosProdutos = {
-      nome: nome.current.value,
-      descricao: descricao.current.value,
-      quantidade: quantidade.current.value,
-      preco: parseFloat(preco.current.value),
-      marca: marca.current.value,
-      categoria: categoria.current.value,
-      foto: foto.current.value,
-    };
+    const formData = new FormData();
+    formData.append("nome", nome.current.value);
+    formData.append("descricao", descricao.current.value);
+    formData.append("quantidade", quantidade.current.value);
+    formData.append("preco", preco.current.value);
+    formData.append("marca", marca.current.value);
+    formData.append("categoria", categoria.current.value);
+    formData.append("foto", foto.current.files[0]); // Enviando a imagem corretamente
 
     try {
-      await axios.post("http://localhost:5000/addProduct", dadosProdutos);
+      await axios.post("http://localhost:5000/addProduct", formData, {
+        headers: {"Content-Type": "multipart/form-data"},
+      });
 
       // Limpar campos do formulário
       nome.current.value = "";
