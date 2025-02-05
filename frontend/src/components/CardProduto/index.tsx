@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export function CardProduto({ produto, onUpdate }) {
     const modalAddRef = useRef<HTMLDialogElement | null>(null);
@@ -11,10 +12,10 @@ export function CardProduto({ produto, onUpdate }) {
     const handleUseMaterial = async () => {
         if (produto.quantidade > 0) {
             const novaQuantidade = produto.quantidade - 1;
-    
+
             try {
                 await axios.put(`http://localhost:5000/updateProduct/${produto.id}`, {
-                    quantidade: novaQuantidade, 
+                    quantidade: novaQuantidade,
                 });
 
                 onUpdate(produto.id, novaQuantidade);
@@ -72,10 +73,13 @@ export function CardProduto({ produto, onUpdate }) {
                     <h2 className="card-title justify-center">{produto.nome || "Produto sem nome"}</h2>
                     <p>Quantidade: {produto.quantidade ?? "Não especificado"}</p>
                     <p>Preço: R${produto.preco ?? "0,00"}</p>
-                    
+                    <Link to={`/produto/${produto.id}`} className="justify-center text-sm font-light m-auto text-blue-400 hover:underline">
+                        Ver detalhes
+                    </Link>
+
                     {/* Botão para abrir o modal de adicionar material */}
-                    <button 
-                        className="btn btn-primary align-middle" 
+                    <button
+                        className="btn btn-primary align-middle"
                         onClick={() => modalAddRef.current?.showModal()}
                     >
                         Adicionar Material
@@ -87,7 +91,7 @@ export function CardProduto({ produto, onUpdate }) {
                         onClick={() => modalUseRef.current?.showModal()}
                     >
                         Usar Material
-                    </button>                
+                    </button>
                 </div>
             </div>
 
@@ -111,7 +115,7 @@ export function CardProduto({ produto, onUpdate }) {
                         </form>
                         <button className="btn btn-success" onClick={handleAddMaterial}>
                             Confirmar
-                        </button>  
+                        </button>
                     </div>
                 </div>
             </dialog>
@@ -128,7 +132,7 @@ export function CardProduto({ produto, onUpdate }) {
                         </form>
                         <button className="btn btn-success" onClick={handleUseMaterial}>
                             Confirmar
-                        </button>  
+                        </button>
                     </div>
                 </div>
             </dialog>

@@ -46,7 +46,7 @@ export const addProduct = async (req, res) => {
     }
 };
 
-// Retorna todos os produtos
+// Rotas POST
 export const getProducts = async (req, res) => {
     const q = "SELECT * FROM produtos;";
     let conn;
@@ -70,7 +70,36 @@ export const getProducts = async (req, res) => {
     }
 };
 
+//Rotas GET
+export const getProductById = async (req, res) => {
+    const { id } = req.params;
+    const q = "SELECT * FROM produtos WHERE id = ?;";
+    let conn;
 
+    try {
+        conn = await pool.getConnection();
+        const [rows] = await conn.query(q, [id]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "Produto não encontrado!" });
+        }
+
+        const produto = {
+            ...rows[0],
+            foto: rows[0].foto ? `http://localhost:5000/uploads/${rows[0].foto}` : null,
+        };
+
+        res.status(200).json(produto);
+    } catch (err) {
+        console.error("Erro no banco de dados:", err);
+        res.status(500).json({ error: "Erro no servidor!" });
+    } finally {
+        if (conn) conn.release();
+    }
+};
+
+
+// Rota DELETE
 export const deleteProduct = async (req, res) => {
     const { id } = req.params; 
     const q = "DELETE FROM produtos WHERE id = ?;";
@@ -79,7 +108,7 @@ export const deleteProduct = async (req, res) => {
     try {
         conn = await pool.getConnection(); 
         const result = await conn.query(q, [id]); 
-        conn.release(); // Libera a conexão
+        conn.release(); 
 
         // Verifica se algum registro foi deletado
         if (result.affectedRows === 0) {
@@ -95,6 +124,8 @@ export const deleteProduct = async (req, res) => {
     }
 };
 
+
+// Rotas PUT
 export const updateQuantidade = async (req, res) => {
     const { id } = req.params;
     const { nome, descricao, quantidade, preco, marca, categoria, foto } = req.body;

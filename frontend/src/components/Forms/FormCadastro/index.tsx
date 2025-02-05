@@ -53,6 +53,7 @@ export function CadastroProduto() {
       foto.current.value = "";
 
       setToast({ type: "success", message: "Material cadastrado com sucesso!" });
+      setTimeout(() => setToast(null), 3000);
     } catch (error) {
       console.error("Erro ao cadastrar Material:", error);
       setToast({ type: "error", message: "Erro ao cadastrar Material." });
