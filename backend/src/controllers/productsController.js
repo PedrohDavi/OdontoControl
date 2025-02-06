@@ -101,14 +101,14 @@ export const getProductById = async (req, res) => {
 
 // Rota DELETE
 export const deleteProduct = async (req, res) => {
-    const { id } = req.params; 
+    const { id } = req.params;
     const q = "DELETE FROM produtos WHERE id = ?;";
     let conn;
 
     try {
-        conn = await pool.getConnection(); 
-        const result = await conn.query(q, [id]); 
-        conn.release(); 
+        conn = await pool.getConnection();
+        const result = await conn.query(q, [id]);
+        conn.release();
 
         // Verifica se algum registro foi deletado
         if (result.affectedRows === 0) {
@@ -126,10 +126,36 @@ export const deleteProduct = async (req, res) => {
 
 
 // Rotas PUT
+export const updateProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nome, descricao, preco, marca, categoria, foto } = req.body;
+        const novaFoto = req.file ? `/uploads/${req.file.filename}` : foto; // Mantém a imagem se não for alterada
+
+        if (!nome || !descricao || !preco) {
+            return res.status(400).json({ message: "Campos obrigatórios não podem estar vazios" });
+        }
+
+        await pool.query(
+            `UPDATE produtos 
+             SET nome = ?, descricao = ?, preco = ?, marca = ?, categoria = ?, foto = ? 
+             WHERE id = ?`,
+            [nome, descricao, preco, marca, categoria, novaFoto, id]
+        );
+
+        res.json({ message: "Produto atualizado com sucesso!" });
+    } catch (error) {
+        console.error("Erro ao atualizar produto:", error);
+        res.status(500).json({ error: "Erro ao atualizar produto" });
+    }
+};
+
+
+
 export const updateQuantidade = async (req, res) => {
     const { id } = req.params;
-    const { nome, descricao, quantidade, preco, marca, categoria, foto } = req.body;
-    
+    const { quantidade } = req.body;
+
     const q = `
         UPDATE produtos 
         SET quantidade = ?
@@ -141,7 +167,7 @@ export const updateQuantidade = async (req, res) => {
     try {
         conn = await pool.getConnection();
         const [result] = await conn.query(q, [quantidade, id]);
-        conn.release(); 
+        conn.release();
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ mensagem: "Produto não encontrado." });
@@ -155,3 +181,5 @@ export const updateQuantidade = async (req, res) => {
         if (conn) conn.release();
     }
 };
+
+

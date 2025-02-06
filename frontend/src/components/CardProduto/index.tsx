@@ -42,7 +42,7 @@ export function CardProduto({ produto, onUpdate }) {
         const novaQuantidade = produto.quantidade + quantidadeAdicionar;
 
         try {
-            await axios.put(`http://localhost:5000/updateProduct/${produto.id}`, {
+            await axios.put(`http://localhost:5000//updateQuantidade/${produto.id}`, {
                 quantidade: novaQuantidade,
             });
 

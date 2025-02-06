@@ -77,7 +77,7 @@ export function CadastroProduto() {
     <div className="h-screen flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-slate-300 p-10 rounded-lg w-full max-w-lg flex justify-center items-center flex-col gap-3"
+        className="bg-pink-100 p-10 rounded-lg w-full max-w-lg flex justify-center items-center flex-col gap-3"
       >
         <h1 className="font-bold text-xl mb-4">Cadastro de Material</h1>
         <input
