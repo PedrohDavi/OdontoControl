@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function Navbar({ setFiltroNomeProduto }) {
   const [inputValue, setInputValue] = useState("");
+  const location = useLocation();
+
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    setFiltroNomeProduto(value); // Atualiza o filtro no componente pai
+    setFiltroNomeProduto(value); 
   };
 
   return (
@@ -27,20 +29,22 @@ export function Navbar({ setFiltroNomeProduto }) {
         </div>
       </div>
 
-      <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">OdontoControl</a>
+      <div className={`navbar-center ${location.pathname !== "/estoque" ? "w-full flex justify-center" : ""}`}>
+        <a className="btn btn-ghost text-xl"><Link to="/">OdontoControl</Link></a>
       </div>
-
-      <div className="navbar-end">
-        {/* Input de pesquisa */}
-        <input
-          type="text"
-          placeholder="Pesquisar material..."
-          value={inputValue}
-          onChange={handleInputChange}
-          className="input input-bordered input-sm w-32 md:w-48"
-        />
-      </div>
+    
+      {/* Exibe a barra de pesquisa apenas na página ListaProdutos */}
+      {location.pathname === "/estoque" && (
+        <div className="navbar-end">
+          <input
+            type="text"
+            placeholder="Pesquisar material..."
+            value={inputValue}
+            onChange={handleInputChange}
+            className="input input-bordered input-sm w-32 md:w-48"
+          />
+        </div>
+      )}
     </div>
   );
 }
